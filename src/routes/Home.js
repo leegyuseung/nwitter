@@ -14,7 +14,7 @@ import { uuidv4 } from "@firebase/util";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
   useEffect(() => {
     const q = query(
       collection(dbService, "nweets"),
@@ -32,7 +32,7 @@ const Home = ({ userObj }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     let attachmentURL = "";
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
       await uploadString(attachmentRef, attachment, "data_url");
       attachmentURL = await getDownloadURL(ref(storageService, attachmentRef));
